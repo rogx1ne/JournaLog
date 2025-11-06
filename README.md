@@ -1,73 +1,48 @@
-# React + TypeScript + Vite
+# 📔 My Offline Journal (LOG)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple, offline-first personal journal application built with React, TypeScript, and Vite. All journal entries are saved directly to your browser's `localStorage`, meaning your data never leaves your computer and is available immediately when you open the app.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Offline First:** All data is stored in `localStorage`. No internet connection or account required.
+* **Light & Dark Themes:** Easily toggle between light and dark modes. Your preference is also saved in `localStorage`.
+* **Responsive Design:** A two-column layout for desktop and a clean, single-column layout for mobile.
+* **View Full Entries:** Click any entry in the list to open a modal popup and read the full text.
+* **Scrollable List:** The entry list scrolls independently, even if you have hundreds of entries.
+* **Built with Modern Tools:** Uses React hooks, TypeScript, and a fast Vite build environment.
 
-## React Compiler
+## 📸 App Preview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*(To create a screenshot: Run your app, take a picture, save it in a folder named `screenshots` in your project, and then change the path below)*
 
-## Expanding the ESLint configuration
+![App Screenshot in Dark Mode](screenshots/app-dark.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **Frontend:** [React](https://reactjs.org/)
+* **Language:** [TypeScript](https://www.typescriptlang.org/)
+* **Build Tool:** [Vite](https://vitejs.dev/)
+* **Storage:** Browser `localStorage`
+* **Styling:** CSS with CSS Variables for theming
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+To run this project locally:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/my-journal.git](https://github.com/your-username/my-journal.git)
+    cd my-journal
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+The app will be available at `http://localhost:5173`.
