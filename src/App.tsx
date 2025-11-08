@@ -1,39 +1,36 @@
 import { useState, useEffect } from 'react';
-import type { JournalEntry } from './types'; 
-import EntryForm from './components/EntryForm';
+import type { JournalEntry } from './types';
 import EntryList from './components/EntryList';
-import './App.css';
 import EntryModal from './components/EntryModal';
-import ThemeToggle from './components/ThemeToggle';
+import Header from './components/Header';
+import NewEntryModal from './components/NewEntryModal'; 
+import TypingAnimation from './components/TypingAnimation';
 
-const getInitialTheme = (): string => {
+const initializeTheme = (): string => {
   const savedTheme = localStorage.getItem("journalTheme");
-  return savedTheme ? savedTheme : 'light';
+  const theme = savedTheme ? savedTheme : 'light';
+  document.body.className = theme + '-theme';
+  return theme;
 };
 
 function App() {
   const [entries, setEntries] = useState<JournalEntry[]>(() => {
     const savedEntries = localStorage.getItem("journalEntries");
-    if (savedEntries) {
-      return JSON.parse(savedEntries);
-    } else {
-      return [];
-    }
+    return savedEntries ? JSON.parse(savedEntries) : [];
   });
-
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
-  
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [theme, setTheme] = useState(initializeTheme);
 
-  useEffect(() => {
-    localStorage.setItem("journalTheme", theme);
-    document.body.className = theme + '-theme';
-  }, [theme]);
+  const [isNewEntryModalOpen, setIsNewEntryModalOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("journalEntries", JSON.stringify(entries));
   }, [entries]);
 
+  useEffect(() => {
+    localStorage.setItem("journalTheme", theme);
+    document.body.className = theme + '-theme';
+  }, [theme]);
 
   const handleAddEntry = (text: string) => {
     const newEntry: JournalEntry = {
@@ -55,18 +52,20 @@ function App() {
 
   return (
     <div className="App">
-      <ThemeToggle theme={theme} onToggle={toggleTheme} />
-      <h1 style={{textAlign: 'left'}}>LOG</h1>
+      <Header theme={theme} onToggle={toggleTheme} />
       
       <div className="home-container">
-        <div className="form-box">
-          <h2>New Entry</h2>
-          <EntryForm onAddEntry={handleAddEntry} />
+        <div 
+          className="form-box clickable-animation-box" 
+          onClick={() => setIsNewEntryModalOpen(true)}
+          role="button"
+          tabIndex={0}
+          aria-label="Write new entry"
+        >
+          <TypingAnimation />
         </div>
-
         <div className="list-box">
-          <h2>Your Entries</h2>
-          <EntryList entries={entries} onDeleteEntry={handleDeleteEntry} onViewEntry={setSelectedEntry}/>
+          <EntryList entries={entries} onViewEntry={setSelectedEntry}/>
         </div>
       </div>
 
@@ -74,6 +73,13 @@ function App() {
         <EntryModal 
           entry={selectedEntry} 
           onClose={() => setSelectedEntry(null)} 
+          onDelete={handleDeleteEntry}
+        />
+      )}
+      {isNewEntryModalOpen && (
+        <NewEntryModal
+          onClose={() => setIsNewEntryModalOpen(false)}
+          onAddEntry={handleAddEntry}
         />
       )}
     </div>

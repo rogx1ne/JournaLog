@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ThemeToggleProps {
   theme: string;
   onToggle: () => void;
@@ -8,9 +6,8 @@ interface ThemeToggleProps {
 function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
   return (
     <button onClick={onToggle} className="theme-toggle">
-      {theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+      {theme === 'light' ?  '☀️ Light': '🌙 Dark'}
     </button>
   );
 }
-
 export default ThemeToggle;
