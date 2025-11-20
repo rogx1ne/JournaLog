@@ -100,7 +100,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header onOpenSettings={() => setIsSettingsOpen(true)} />
+      <Header theme={initializeTheme()}onOpenSettings={() => setIsSettingsOpen(true)} />
       
       <input 
         type="file" 
