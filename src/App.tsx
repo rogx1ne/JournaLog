@@ -99,14 +99,6 @@ function App() {
   return (
     <div className="App">
       <Header theme={initializeTheme()}onOpenSettings={() => setIsSettingsOpen(true)} />
-      
-      <input 
-        type="file" 
-        accept=".json" 
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        style={{ display: 'none' }} 
-      />
 
       <SettingsDrawer 
         isOpen={isSettingsOpen}
