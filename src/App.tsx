@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import type { JournalEntry } from './types';
 
 import EntryList from './components/EntryList';
@@ -26,7 +26,7 @@ function App() {
   
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  
 
   useEffect(() => {
     localStorage.setItem("journalEntries", JSON.stringify(entries));
@@ -63,14 +63,12 @@ function App() {
     link.href = url;
     link.download = `journal-backup-${new Date().toISOString().split('T')[0]}.json`;
     link.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 2000);
   };
 
-  const triggerImport = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -116,7 +114,7 @@ function App() {
         isDarkMode={theme === 'dark'}
         toggleTheme={toggleTheme}
         onExport={handleExport}
-        onImport={triggerImport} 
+        onImport={handleImport} 
       />
 
       <div className="home-container">
