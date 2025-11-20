@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from 'react'; 
 import type { JournalEntry } from './types';
-import EntryForm from './components/EntryForm';
-import EntryList from './components/EntryList';
 import EntryModal from './components/EntryModal';
 import Header from './components/Header';
 import NewEntryModal from './components/NewEntryModal';
@@ -100,7 +98,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header onOpenSettings={() => setIsSettingsOpen(true)} />
+      <Header theme={initializeTheme()} onOpenSettings={() => setIsSettingsOpen(true)} />
       
       <input 
         type="file" 
