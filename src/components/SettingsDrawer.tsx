@@ -7,7 +7,7 @@ interface SettingsDrawerProps {
   isDarkMode: boolean;
   toggleTheme: () => void;
   onExport: () => void;
-  onImport: () => void;
+  onImport: (event: React.ChangeEvent<HTMLInputElement>) => void; 
 }
 
 const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
@@ -59,15 +59,21 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
               <span>Export Journal (JSON)</span>
             </button>
 
-            <button 
-              onClick={onImport}
-              className="settings-drawer-btn"
-            >
+            
+            <label className="settings-drawer-btn">
               <Download size={18} />
               <span>Import Backup</span>
-            </button>
+              
+              <input 
+                type="file" 
+                accept=".json" 
+                onChange={onImport} 
+                style={{ display: 'none' }} 
+              />
+            </label>
           </div>
         </section>
+
         <div className="settings-drawer-footer">
           Journal App v1.0
         </div>
