@@ -68,7 +68,6 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
             </button>
           </div>
         </section>
-
         <div className="settings-drawer-footer">
           Journal App v1.0
         </div>
