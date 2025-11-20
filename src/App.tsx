@@ -5,6 +5,8 @@ import EntryModal from './components/EntryModal';
 import Header from './components/Header';
 import NewEntryModal from './components/NewEntryModal'; 
 import TypingAnimation from './components/TypingAnimation';
+import { Settings } from 'lucide-react'; 
+import SettingsDrawer from './components/SettingsDrawer';
 
 const initializeTheme = (): string => {
   const savedTheme = localStorage.getItem("journalTheme");
@@ -22,6 +24,7 @@ function App() {
   const [theme, setTheme] = useState(initializeTheme);
 
   const [isNewEntryModalOpen, setIsNewEntryModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("journalEntries", JSON.stringify(entries));
@@ -50,9 +53,17 @@ function App() {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
+  const handleExport = () => {
+    console.log("Exporting data...");
+  };
+
+  const handleImport = () => {
+    console.log("Importing data...");
+  };
+
   return (
     <div className="App">
-      <Header theme={theme} onToggle={toggleTheme} />
+      <Header theme={theme} onOpenSettings={() => setIsSettingsOpen(true)} />
       
       <div className="home-container">
         <div 
@@ -82,6 +93,15 @@ function App() {
           onAddEntry={handleAddEntry}
         />
       )}
+
+      <SettingsDrawer
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        isDarkMode={theme === 'dark'}
+        toggleTheme={toggleTheme}
+        onExport={handleExport}
+        onImport={handleImport}
+      />
     </div>
   );
 }

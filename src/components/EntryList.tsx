@@ -8,7 +8,7 @@ interface EntryListProps {
 
 function EntryList({ entries, onViewEntry }: EntryListProps) {
   if (entries.length === 0) {
-    return <h2 className="entry-list-empty">No entries yet. Write one!</h2>;
+    return <h2 className="entry-list-empty">No entries yet. Want to get started and write one!</h2>;
   }
 
   return (
