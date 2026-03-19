@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const phrases = [
   "How was today...",
   "What's on your mind?",
   "Tell me about your day...",
-  "New entry..."
+  "Start writing..."
 ];
 
 const TYPING_SPEED = 100;
@@ -43,10 +44,20 @@ function TypingAnimation() {
   }, [displayedText, isDeleting, phraseIndex]);
 
   return (
-    <div className="typing-animation">
+    <motion.div 
+      className="typing-animation"
+      animate={{ 
+        y: [0, -10, 0],
+      }}
+      transition={{ 
+        duration: 4, 
+        repeat: Infinity, 
+        ease: "easeInOut" 
+      }}
+    >
       {displayedText}
       <span className="typing-cursor"></span>
-    </div>
+    </motion.div>
   );
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, Moon, Sun, Download, Upload } from 'lucide-react'; 
+import { motion } from 'framer-motion';
 
 interface SettingsDrawerProps {
   isOpen: boolean;
@@ -11,7 +12,6 @@ interface SettingsDrawerProps {
 }
 
 const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
-  isOpen,
   onClose,
   isDarkMode,
   toggleTheme,
@@ -20,13 +20,21 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
 }) => {
   return (
     <>
-      <div 
-        className={`settings-drawer-overlay ${isOpen ? 'open' : ''}`}
+      <motion.div 
+        className="settings-drawer-overlay open"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         onClick={onClose}
       />
       
-      <div className={`settings-drawer ${isOpen ? 'open' : ''}`}>
-        
+      <motion.div 
+        className="settings-drawer open"
+        initial={{ x: '100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '100%' }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+      >
         <div className="settings-drawer-header">
           <h2>Settings</h2>
           <button onClick={onClose} className="settings-drawer-close-btn" aria-label="Close settings">
@@ -55,15 +63,13 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
               onClick={onExport}
               className="settings-drawer-btn"
             >
-              <Upload size={18} />
+              <Download size={18} />
               <span>Export Journal (JSON)</span>
             </button>
 
-            
             <label className="settings-drawer-btn">
-              <Download size={18} />
+              <Upload size={18} />
               <span>Import Backup</span>
-              
               <input 
                 type="file" 
                 accept=".json" 
@@ -75,9 +81,9 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
         </section>
 
         <div className="settings-drawer-footer">
-          Journal App v1.0
+          JournaLog v1.0.0
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

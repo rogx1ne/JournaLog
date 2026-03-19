@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'; 
+import { motion, AnimatePresence } from 'framer-motion';
 import type { JournalEntry } from './types';
 
 import EntryList from './components/EntryList';
@@ -25,8 +26,6 @@ function App() {
   const [isNewEntryModalOpen, setIsNewEntryModalOpen] = useState(false);
   
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
-  
 
   useEffect(() => {
     localStorage.setItem("journalEntries", JSON.stringify(entries));
@@ -98,20 +97,29 @@ function App() {
 
   return (
     <div className="App">
-      <Header theme={initializeTheme()}onOpenSettings={() => setIsSettingsOpen(true)} />
+      <Header theme={theme} onOpenSettings={() => setIsSettingsOpen(true)} />
 
-      <SettingsDrawer 
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        isDarkMode={theme === 'dark'}
-        toggleTheme={toggleTheme}
-        onExport={handleExport}
-        onImport={handleImport} 
-      />
+      <AnimatePresence>
+        {isSettingsOpen && (
+          <SettingsDrawer 
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+            isDarkMode={theme === 'dark'}
+            toggleTheme={toggleTheme}
+            onExport={handleExport}
+            onImport={handleImport} 
+          />
+        )}
+      </AnimatePresence>
 
-      <div className="home-container">
+      <motion.div 
+        className="home-container"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div 
-          className="form-box clickable-animation-box" 
+          className="form-box glass" 
           onClick={() => setIsNewEntryModalOpen(true)}
           role="button"
           tabIndex={0}
@@ -122,22 +130,26 @@ function App() {
         <div className="list-box">
           <EntryList entries={entries} onViewEntry={setSelectedEntry}/>
         </div>
-      </div>
+      </motion.div>
 
-      {selectedEntry && (
-        <EntryModal 
-          entry={selectedEntry} 
-          onClose={() => setSelectedEntry(null)} 
-          onDelete={handleDeleteEntry}
-        />
-      )}
+      <AnimatePresence>
+        {selectedEntry && (
+          <EntryModal 
+            entry={selectedEntry} 
+            onClose={() => setSelectedEntry(null)} 
+            onDelete={handleDeleteEntry}
+          />
+        )}
+      </AnimatePresence>
       
-      {isNewEntryModalOpen && (
-        <NewEntryModal
-          onClose={() => setIsNewEntryModalOpen(false)}
-          onAddEntry={handleAddEntry}
-        />
-      )}
+      <AnimatePresence>
+        {isNewEntryModalOpen && (
+          <NewEntryModal
+            onClose={() => setIsNewEntryModalOpen(false)}
+            onAddEntry={handleAddEntry}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

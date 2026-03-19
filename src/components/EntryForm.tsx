@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 interface EntryFormProps {
   onSave: (text: string) => void;
@@ -25,13 +26,19 @@ function EntryForm({ onSave, onCancel }: EntryFormProps) {
         ref={textareaRef}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="What's on your mind?"
+        placeholder="What's on your mind today?"
       />
       <div className="entry-form-buttons">
         <button type="button" className="cancel-btn" onClick={onCancel}>
-          Back
+          Cancel
         </button>
-        <button type="submit">Save</button>
+        <motion.button 
+          type="submit"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          Save Entry
+        </motion.button>
       </div>
     </form>
   );
