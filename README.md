@@ -1,46 +1,39 @@
-# 📔 JournaLOG
+# 📔 JournaLog
 
-A minimalist, offline-first personal journaling application built with **React**, **TypeScript**, and **Vite**. 
+A minimalist, **Apple Notes inspired** digital notebook and personal journaling application. Built for the modern web with **React**, **TypeScript**, and **Dexie.js**.
 
-Designed with privacy in mind, **JournalLOG** stores all your data locally in your browser. No servers, no accounts, no tracking. Just you and your thoughts.
+JournaLog transforms the traditional text-based journal into a **Hybrid Tactical Notebook**, allowing you to seamlessly switch between typing your thoughts and scribbling diagrams—all on the same digital paper.
 
-[preview:](https://logjournal.vercel.app/)
+[Live Preview](https://logjournal.vercel.app/)
 
 ![Project Status](https://img.shields.io/badge/status-active-success.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## ✨ Features
+## ✨ Key Features
 
-* **🔒 100% Private & Offline:** Data is stored in your browser's `localStorage`. It never leaves your device.
-* **🌓 Dark & Light Mode:** A fully themed UI that respects your eyes. Preferences are saved automatically.
-* **💾 Data Ownership:** Full Backup & Restore functionality via JSON files. Move your data between devices easily.
-* **📱 Fully Responsive:** A mobile-first design that adapts perfectly to desktop layouts.
-* **🎨 Custom UI:**
-    * **Typing Animation:** A dynamic entry trigger that invites you to write.
-    * **Settings Drawer:** A clean slide-out menu for secondary actions.
-    * **Distraction-Free Writing:** Modal-based writing interface.
-
-## 📸 Screenshots
-
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Light Mode](./screenshots/lightmode.png) | ![Dark Mode](./screenshots/darkmode.png) |
+* **📝 Apple Notes Style Hybrid Interface:** A unified "Paper" surface where you can type and scribble on the same page. Toggle between **Type Mode** and **Scribble Mode** instantly.
+* **🎨 Integrated Canvas:** Hand-draw diagrams, sketches, or write in your own handwriting using the built-in HTML5 Canvas layer.
+* **🔒 100% Private & Offline-First:** Powered by **IndexedDB (via Dexie.js)**. Your data stays in your browser's database, not on a server. No accounts, no tracking.
+* **🧠 Sentiment Analysis:** Automatically analyzes the mood of your entries using natural language processing to provide emotional insights.
+* **💾 Data Ownership:** Robust Backup & Restore functionality. Export your entire notebook as a JSON file or import existing backups.
+* **🌓 Dark & Light Mode:** A beautifully crafted UI with notebook-style aesthetics (ruled lines, margin markers) that adapts to your theme preference.
+* **📱 Fully Responsive:** Desktop-class features optimized for mobile and tablet touch interfaces.
 
 ## 🛠️ Tech Stack
 
-* **Frontend Framework:** [React](https://reactjs.org/) (v18+)
-* **Language:** [TypeScript](https://www.typescriptlang.org/)
-* **Build Tool:** [Vite](https://vitejs.dev/)
-* **Styling:** Pure CSS with CSS Variables (No heavy UI frameworks).
+* **Frontend:** [React 19](https://reactjs.org/)
+* **Database:** [Dexie.js](https://dexie.org/) (IndexedDB Wrapper)
+* **Animations:** [Framer Motion](https://www.framer.com/motion/)
 * **Icons:** [Lucide React](https://lucide.dev/)
+* **Analysis:** [Sentiment](https://www.npmjs.com/package/sentiment)
+* **Build Tool:** [Vite](https://vitejs.dev/)
+* **Styling:** Pure CSS with CSS Variables (Notebook-inspired custom theme).
 
 ## 🚀 Getting Started
 
-Follow these steps to get a local copy up and running.
-
 ### Prerequisites
 
-* Node.js (v16 or higher)
+* Node.js (v18 or higher)
 * npm
 
 ### Installation
@@ -63,30 +56,36 @@ Follow these steps to get a local copy up and running.
 
 4.  Open your browser and visit `http://localhost:5173`.
 
-## 📖 How to Use
-
-### Writing an Entry
-Click the box with the **typing animation** on the left (or top on mobile). A modal will open where you can focus entirely on writing.
-
-### Managing Data (Import/Export)
-Click the **Gear Icon (⚙️)** in the top right corner to open the **Settings Drawer**.
-* **Export:** Downloads a `.json` file containing all your entries. Keep this safe!
-* **Import:** Restores entries from a backup file. *Note: This overwrites current data.*
-
 ## 📂 Project Structure
 
 ```text
 src/
 ├── components/
-│   ├── EntryForm.tsx       # The form logic inside the modal
-│   ├── EntryList.tsx       # Displays the scrollable list of entries
-│   ├── EntryModal.tsx      # Popup for viewing/deleting entries
-│   ├── NewEntryModal.tsx   # Popup wrapper for creating entries
-│   ├── Header.tsx          # Top bar with title and settings trigger
-│   ├── SettingsDrawer.tsx  # Slide-out panel for Theme & Data controls
-│   ├── ThemeToggle.tsx     # The Light/Dark switch component
-│   └── TypingAnimation.tsx # The animated cursor effect
+│   ├── Canvas.tsx          # HTML5 Canvas layer for sketching
+│   ├── EntryItem.tsx       # Individual entry card with sentiment & thumbnails
+│   ├── EntryList.tsx       # Scrollable list of notebook entries
+│   ├── EntryModal.tsx      # Full-page view for reading entries
+│   ├── NewEntryModal.tsx   # Integrated Apple-Notes style editor
+│   ├── SettingsDrawer.tsx  # Theme and Data portability controls
+│   └── TypingAnimation.tsx # Dynamic entry trigger on the home screen
+├── db.ts                   # Dexie.js IndexedDB configuration
 ├── types.ts                # TypeScript interfaces (JournalEntry)
-├── App.css                 # CSS Variables and Global Styles
-├── App.tsx                 # Main Application Logic & State
-└── main.tsx                # Entry point
+├── App.tsx                 # Core Application Logic & State
+└── App.css                 # Notebook-style CSS & Variables
+```
+
+## 📖 How to Use
+
+### Creating a Hybrid Entry
+Click the **Typing Animation** box to start a new entry.
+* **Type Mode (Edit Icon):** Standard distraction-free typing.
+* **Scribble Mode (Pen Icon):** Draw directly over the notebook lines.
+* **Saving:** Both text and sketches are saved together as a single cohesive entry.
+
+### Managing Data
+Access the **Gear Icon (⚙️)** in the top right:
+* **Export:** Downloads your entire database as a JSON backup.
+* **Import:** Restore from a previous backup (Overwrites or Appends).
+
+---
+Developed with ❤️ for privacy-conscious thinkers.

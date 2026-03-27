@@ -1,4 +1,3 @@
-import React from 'react';
 import { X, Moon, Sun, Download, Upload } from 'lucide-react'; 
 import { motion } from 'framer-motion';
 
