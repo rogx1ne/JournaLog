@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 interface EntryListProps {
   entries: JournalEntry[];
   onViewEntry: (entry: JournalEntry) => void;
+  emptyMessage?: string;
 }
 
 const containerVariants = {
@@ -22,9 +23,9 @@ const itemVariants = {
   visible: { y: 0, opacity: 1 }
 };
 
-function EntryList({ entries, onViewEntry }: EntryListProps) {
+function EntryList({ entries, onViewEntry, emptyMessage }: EntryListProps) {
   if (entries.length === 0) {
-    return <div className="entry-list-empty">No entries yet. Start writing your first one!</div>;
+    return <div className="entry-list-empty">{emptyMessage || 'No entries yet. Start writing your first one!'}</div>;
   }
 
   return (
@@ -34,7 +35,7 @@ function EntryList({ entries, onViewEntry }: EntryListProps) {
       initial="hidden"
       animate="visible"
     >
-      <h3 style={{ marginBottom: '1.5rem', opacity: 0.8 }}>Your Entries</h3>
+      <h3 className="entry-list-heading">Your Entries ({entries.length})</h3>
       {entries.map((entry) => (
         <motion.div key={entry.id} variants={itemVariants}>
           <EntryItem

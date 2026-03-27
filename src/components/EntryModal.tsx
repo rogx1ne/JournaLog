@@ -5,14 +5,17 @@ interface EntryModalProps {
   entry: JournalEntry;
   onClose: () => void;
   onDelete: (id: string) => void;
+  onEdit: (entry: JournalEntry) => void;
 }
 
-function EntryModal({ entry, onClose, onDelete }: EntryModalProps) {
+function EntryModal({ entry, onClose, onDelete, onEdit }: EntryModalProps) {
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this entry?")) {
-      onDelete(entry.id);
-      onClose();
-    }
+    onDelete(entry.id);
+    onClose();
+  };
+
+  const handleEdit = () => {
+    onEdit(entry);
   };
 
   const formattedDate = new Date(entry.date).toLocaleString('en-US', {
@@ -25,27 +28,37 @@ function EntryModal({ entry, onClose, onDelete }: EntryModalProps) {
   });
 
   return (
-    <motion.div 
-      className="modal-backdrop" 
+    <motion.div
+      className="modal-backdrop"
       onClick={onClose}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
     >
-      <motion.div 
-        className="modal-content glass" 
+      <motion.div
+        className="modal-content glass entry-modal-content notebook-paper"
         onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        initial={{ scale: 0.97, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.97, opacity: 0 }}
+        transition={{ duration: 0.24, ease: [0.4, 0, 0.2, 1] }}
       >
-        <h3 style={{ marginBottom: '1.5rem', opacity: 0.8 }}>{formattedDate}</h3>
-        <p style={{ minHeight: '150px' }}>{entry.text}</p>
+        <h3 className="entry-modal-date">{formattedDate}</h3>
         
+        <div className="entry-modal-body">
+          {entry.drawing && (
+            <div className="entry-modal-drawing">
+              <img src={entry.drawing} alt="Sketch" style={{ maxWidth: '100%', height: 'auto' }} />
+            </div>
+          )}
+          <p className="entry-modal-text notebook-lines">{entry.text}</p>
+        </div>
+
         <div className="modal-footer">
-          <button className="cancel-btn" onClick={onClose}>Back</button>
-          <button className="delete-btn" onClick={handleDelete}>Delete Entry</button>
+          <button type="button" className="cancel-btn" onClick={onClose}>Back</button>
+          <button type="button" className="edit-btn" onClick={handleEdit}>Edit Entry</button>
+          <button type="button" className="delete-btn" onClick={handleDelete}>Delete Entry</button>
         </div>
       </motion.div>
     </motion.div>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 const phrases = [
   "How was today...",
@@ -44,20 +43,10 @@ function TypingAnimation() {
   }, [displayedText, isDeleting, phraseIndex]);
 
   return (
-    <motion.div 
-      className="typing-animation"
-      animate={{ 
-        y: [0, -10, 0],
-      }}
-      transition={{ 
-        duration: 4, 
-        repeat: Infinity, 
-        ease: "easeInOut" 
-      }}
-    >
+    <div className="typing-animation">
       {displayedText}
       <span className="typing-cursor"></span>
-    </motion.div>
+    </div>
   );
 }
 

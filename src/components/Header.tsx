@@ -1,38 +1,31 @@
-import React from 'react';
-import { Settings } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Plus, Settings } from 'lucide-react';
 
 interface HeaderProps {
   theme: string;
-  onOpenSettings: () => void; 
+  onNewEntry: () => void;
+  onOpenSettings: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ theme, onOpenSettings }) => {
+function Header({ theme, onNewEntry, onOpenSettings }: HeaderProps) {
   return (
-    <motion.header 
-      className="app-header glass"
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.div 
-        className="logo"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        Journa<span className={theme === 'light' ? 'logo-log-light' : 'logo-log-dark'}>LOG</span>
-      </motion.div>
-      <motion.button 
-        className="settings-btn" 
-        onClick={onOpenSettings} 
-        aria-label="Open Settings"
-        whileHover={{ rotate: 90 }}
-        transition={{ type: "spring", stiffness: 200 }}
-      >
-        <Settings size={22} />
-      </motion.button>
-    </motion.header>
+    <header className="app-header">
+      <div className="app-header-inner">
+        <div className="logo">
+          Journa<span className={theme === 'light' ? 'logo-log-light' : 'logo-log-dark'}>Log</span>
+        </div>
+        <div className="header-actions">
+          <button className="new-entry-btn" onClick={onNewEntry} aria-label="Create new entry">
+            <Plus size={16} />
+            <span>New Entry</span>
+          </button>
+          <button className="icon-btn settings-btn" onClick={onOpenSettings} aria-label="Open settings">
+            <Settings size={18} />
+            <span className="settings-btn-label">Settings</span>
+          </button>
+        </div>
+      </div>
+    </header>
   );
-};
+}
 
 export default Header;

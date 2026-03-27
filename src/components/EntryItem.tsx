@@ -25,20 +25,35 @@ function EntryItem({ entry, onView }: EntryItemProps) {
     day: 'numeric',
     year: 'numeric'
   });
+  const formattedTime = new Date(entry.date).toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit'
+  });
 
   return (
-    <div 
-      className="entry-item"
+    <button
+      type="button"
+      className="entry-item notebook-paper"
       onClick={() => onView(entry)}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <small>{formattedDate}</small>
-        <span style={{ fontSize: '1.2rem' }} title={`Mood score: ${score}`}>
-          {getMoodEmoji(score)}
-        </span>
+      <div className="entry-item-head">
+        <small className="entry-item-date">{formattedDate} · {formattedTime}</small>
+        <div className="entry-item-indicators">
+          {entry.drawing && <span title="Has sketch" className="indicator-icon">🎨</span>}
+          <span className="entry-item-mood" title={`Mood score: ${score}`}>
+            {getMoodEmoji(score)}
+          </span>
+        </div>
       </div>
-      <p>{entry.text}</p>
-    </div>
+      <div className="entry-item-content">
+        {entry.drawing && (
+          <div className="entry-item-thumbnail">
+            <img src={entry.drawing} alt="Sketch thumbnail" />
+          </div>
+        )}
+        <p className="entry-item-text">{entry.text}</p>
+      </div>
+    </button>
   );
 }
 export default EntryItem;
